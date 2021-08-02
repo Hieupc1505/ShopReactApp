@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bai7.css">
+        <style type="text/css">
+            *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            }
+            .checkout{
+                background: #ccc;
+                width: 50%;
+                padding-bottom: 16px;
+            }
+            .payment-to-checkout {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+            }
+            .bill-payment{
+                padding: 16px;
+                width: 350px;
+            }
+            .bill-payment > ul{
+                list-style: none;
+            }
+            .bill-payment > ul > li :nth-child(Even){
+                padding-top: 16px;
+                padding-bottom: 8px;
+            }
+            .bill-list{
+                
+            }
+            .bill-item:nth-child(Even){
+                padding-top: 16px;
+                padding-bottom: 8px;
+            }
+            .bill-heading, .pay-heading{
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+            .pay-list{
+
+            }
+            .pay-item:nth-child(Even){
+                padding-top: 16px;
+                padding-bottom: 8px;
+            }
+            .credit{
+                display:flex;
+                justify-content: flex-start;
+            }
+            .pay-img{
+                display: block;
+                width: 15%;
+                height: auto;
+                padding: 0 8px 0 0 !important;
+            }
+            input {
+                padding: 8px 4px;
+                width: 100%;
+                color: #ccc;
+                border: 1px solid #a5a2a2;
+                border-radius: 2px;
+            }
+            .diff-list{
+                display: flex;
+                padding-top: 16px;
+                justify-content: space-between;
+            }
+            .diff-item:first-child{
+                padding-right: 8px;
+            }
+            .diff-item:last-child{
+                padding-left: 8px;
+            }
+            .checkbox{
+                display: block;
+            }
+            .checkbox > input{
+                padding: 0!important;
+                float: left;
+            }
+            #checkbox{
+                display: block;
+            }
+            .bottom-checkout{
+                position: relative;
+                padding: 8px 4px;
+                margin: 16px;
+                text-align: center;
+                background: #777;
+                border-radius: 3px; 
+            }
+            .checkout-btn{
+                font-size: 24px;
+                color: #fff;
+                text-decoration: none;
+            }
+            </style>
+    </head>
+    <body>
+        <div class="checkout">
+            <div class="payment-to-checkout">
+                <div class="bill-payment">
+                    <ul class="bill-list">
+                        <li class="bill-heading bill-item">Billing Address</li>
+                        <li class="bill-item">Full name</li>
+                        <li class="bill-item"><input type="text" placeholder="John M. Doe" /></li>
+                        <li class="bill-item">Email</li>
+                        <li class="bill-item"><input type="email" placeholder="john@example.com" /></li>
+                        <li class="bill-item">Address</li>
+                        <li class="bill-item"><input type="text" placeholder="542 W. 15th Street"></li>
+                        <li class="bill-item">City</li>
+                        <li class="bill-item"><input type="text" placeholder="New York" /></li>
+                        <div class="diff-list">
+                            <div class="diff-item">
+                                <li class="bill-item">State</li>
+                                <li class="bill-item"><input type="text" placeholder="NY"></li>
+                            </div>
+                            <div class="diff-item">
+                                <li class="bill-item">Zip</li>
+                                <li class="bill-item"><input type="number" placeholder="10001"></li>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+                
+                <div class="bill-payment">
+                    <ul class="pay-list">
+                        <li class="pay-heading pay-item">Payment</li>
+                        <li class="pay-item">Accepted</li>
+                        <li class="credit pay-item">
+                            <img src="https://kenh14cdn.com/thumb_w/660/2020/7/17/brvn-15950048783381206275371.jpg" alt="" class="pay-img">
+                            <img src="https://kenh14cdn.com/thumb_w/660/2020/7/17/brvn-15950048783381206275371.jpg" alt="" class="pay-img">
+                            <img src="https://kenh14cdn.com/thumb_w/660/2020/7/17/brvn-15950048783381206275371.jpg" alt="" class="pay-img">
+                        </li>
+                        <li class="pay-item">Name on card</li>
+                        <li class="pay-item"><input type="text" placeholder="John More Doe" /></li>
+                        <li class="pay-item">Credit card number</li>
+                        <li class="pay-item"><input type="text" placeholder="1111-2222-3333-4444"></li>
+                        <li class="pay-item">Exp Month</li>
+                        <li class="pay-item"><input type="text" placeholder="September"></li>
+                        <div class="diff-list">
+                            <div class="diff-item">
+                                <li class="pay-item">Exp Year</li>
+                                <li class="pay-item"><input type="number" placeholder="2018"></li>
+                            </div>
+                            <div class="diff-item">
+                                <li class="pay-item">CVV</li>
+                                <li class="pay-item"><input type="number" placeholder="352"></li>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="checkbox" name="checkbox">
+                Shipping address same as billing
+            </div>
+            <div class="bottom-checkout">
+                <a href="#" class="checkout-btn">Continue to checkout</a> 
+            </div>
+        </div>
+    </body>
+</html>

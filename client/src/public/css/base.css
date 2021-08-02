@@ -1,0 +1,14 @@
+html {
+    font-size: 62.5%;
+    line-height: 1.6rem;
+    font-family: "Segoe UI", sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary--color: #00b4d8;
+    --white--color: #fff;
+    --yellow--color: #fc0;
+    --red--color: #ff3a3a;
+    --text--color: #333;
+}

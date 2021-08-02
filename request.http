@@ -1,0 +1,137 @@
+POST http://localhost:5000/user/register
+Content-Type: application/json
+
+{
+    "email" : "addnewEmail3@gmail.com", 
+    "password" : "11223344"
+}
+
+### 
+GET http://localhost:5000/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsM0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRrVk5sUXhVdDZrcE1DeG9LYVVsdGZ1QUVWTHpBaDdIUjRFejdYOXVoNm9IWFdGTzFyZGpOVyIsImlhdCI6MTYyNzM5OTc0NiwiZXhwIjoxNjI3NDA2OTQ2fQ.ZhyIdyvjb8Xke3ax-peCQ67_IdJclRAUzOy2dFjTM3I
+
+
+###
+POST http://localhost:5000/user/login
+Content-Type: application/json
+
+{
+    "email" : "addnewemail3@gmail.com", 
+    "password" : "11223344"
+}
+
+###
+POST http://localhost:5000/user/save/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyNmMxZjRkMzk0MGNhNjAzMyIsImlhdCI6MTYyNjYxNzM3MywiZXhwIjoxNjI2NzkwMTczfQ.FL3gJyBCtnL2myfKZQBQy9a5VWITHYZdcLOifWfRVns
+Content-Type: application/json
+
+{
+    "userName" : "hieupc92", 
+    "number" : "0979834521", 
+    "address" : {
+        "main" : "hanoi", 
+        "des" : "canh ho ba be"
+    }
+}  
+
+###
+POST http://localhost:5000/update 
+Content-type : application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyNmMxZjRkMzk0MGNhNjAzMyIsImlhdCI6MTYyNzA1MjkyOCwiZXhwIjoxNjI3MjI1NzI4fQ.9wRpGlEoEQByumiRKnSyjA3VcZp7hb5Us8iUZpyIPws
+
+{
+    "name" : "hieupc", 
+    "pasow" : "akdjfier"
+}
+
+###
+POST http://localhost:5000/user/update?_method=put
+Content-Type: application/json
+
+{
+    "email" : "vuhieukenny2@gmail.com", 
+    "password" : "11223344"
+}
+
+###
+POST http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyNmMxZjRkMzk0MGNhNjAzMyIsImlhdCI6MTYyNjk2NjIzNSwiZXhwIjoxNjI3MTM5MDM1fQ.6zs8OJw0Jt--GAbBLfkjhVokT4A8z97f-EENZPY1YwQ
+
+{
+    "name" : "đồng hồ nam, đồng hồ , phụ kiện", 
+    "des" : "phụ kiện"
+}
+
+###
+GET http://localhost:5000/api/categories
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyNmMxZjRkMzk0MGNhNjAzMyIsImlhdCI6MTYyNjk2NTQ0NCwiZXhwIjoxNjI3MTM4MjQ0fQ.nYi_DJ3pW9xF37iUi-Yh0vajcK9FNexkIuo1O6U4ENg
+
+
+### 
+GET http://localhost:5000/api/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNTkxNmMxZjRkMzk0MGNhNjAyYiIsImlhdCI6MTYyNjY5MDA3NCwiZXhwIjoxNjI2ODYyODc0fQ.NUmnpWvXiS-_lZ4uJOzpw8bafnIdt-8DLOkEiK4vmho
+### 
+GET http://localhost:5000/user/refresh_token
+
+###
+GET http://localhost:5000/api/products/60f544e0db9bf7089c3cade0
+
+
+### 
+GET http://localhost:5000/api/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNTkxNmMxZjRkMzk0MGNhNjAyYiIsImlhdCI6MTYyNjgyNjk4MywiZXhwIjoxNjI2OTk5NzgzfQ.1Xfubv6PCke0KJMnXGvhKXLbJb1WiGc6segBEGGtf3A
+
+###
+GET http://localhost:5000/api/cart/add/:id
+
+###
+GET http://localhost:5000/api/products/search?q=quần
+
+###
+GET http://localhost:5000/api/page/search?q=phong
+
+###
+GET http://localhost:5000/api/slide?type=prize
+
+
+###
+GET http://localhost:5000/api/slide?type=relative&userId=60f435916c1f4d3940ca602b
+
+###
+GET http://localhost:5000/api/slide?type=saled&num=6
+
+###
+GET http://localhost:5000/api/products/60f55179db9bf7089c3cae3eadf
+
+###
+POST http://localhost:5000/api/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyNmMxZjRkMzk0MGNhNjAzMyIsImlhdCI6MTYyNzM2NDIzMywiZXhwIjoxNjI3MzcxNDMzfQ.Uaz4AnZgFXIqLBz9B-oLUJ012cCP2-4gVpWlAgcG6Hk
+Content-Type: application/json
+
+{
+    "userInfo" : "HieuPc", 
+    "order" : "none"
+}
+
+###
+GET http://localhost:5000/user/order 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDAyNjYxYjIyMzM4MWRhY2Q3ZmM4OCIsImlhdCI6MTYyNzQwNTA4NiwiZXhwIjoxNjI3NDEyMjg2fQ.atihA7l_T_g3WLYiYcrg0luJC7NCVQSmHvaqBCVD-sk
+ 
+### 
+POST http://localhost:5000/user/forget
+Content-Type: application/json
+
+{
+    "email" : "hoanghieuss3344@gmail.com"
+}
+
+###
+POST http://localhost:5000/user/forget/account/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGY0MzU5MTZjMWY0ZDM5NDBjYTYwMmIiLCJpYXQiOjE2Mjc2MDk2NTUsImV4cCI6MTYyNzYxMDI1NX0.PytV0wmSycNUWhz6n0qpzVEjsTFJvcm9_y0G5pNhdH8
+Content-Type: application/json
+
+{
+    "password" : "04092001hh"
+}

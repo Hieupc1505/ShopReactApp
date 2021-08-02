@@ -1,0 +1,25 @@
+.form-control-product {
+    margin-bottom: 0.5rem;
+}
+
+.img-upload img {
+    /* position: absolute; */
+    width: 100%;
+    height: auto;
+    top: 0;
+}
+
+.img-close {
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 5px;
+}
+
+.list-img-item {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
