@@ -55,7 +55,6 @@ class userCtl {
                 { email, password: hashPass },
                 "2h"
             );
-            console.log(tokenActivate);
             const url = `${URL}/user/activate/${tokenActivate}`;
 
             sendMail(email, url, "validate your email address");
@@ -91,7 +90,7 @@ class userCtl {
                 userId: newAcc.id,
             });
 
-            res.redirect("http://localhost:3000/login");
+            res.redirect(`${URL}/login`);
             // res.json({
             //     success: true, //
             //     msg: "Account is activated",
@@ -191,7 +190,7 @@ class userCtl {
             "10m"
         );
 
-        const url = `http://localhost:3000/user/forget/account/${tokenForget}`;
+        const url = `${URL}/user/forget/account/${tokenForget}`;
         // console.log(tokenForget);
         sendMail(email, url, "reset password");
         res.status(200).json({
