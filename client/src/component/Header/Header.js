@@ -392,13 +392,12 @@ const Header = () => {
                                 <span
                                     className="header_nav-auth-account-img me-2"
                                     style={
-                                        Object.keys(user.avata).lenght !== 0
+                                        isAuth && isLoad && !!user.avata
                                             ? {
                                                   backgroundImage: `url('${user.avata.url}')`,
                                               }
                                             : {
-                                                  backgroundImage:
-                                                      "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
+                                                  backgroundImage: `url('https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png')`,
                                               }
                                     }
                                 ></span>
