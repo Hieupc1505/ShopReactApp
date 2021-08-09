@@ -134,7 +134,7 @@
     min-width: 0;
     color: #222;
     border: none;
-    resize: none;
+    resize: vertical;
 }
 
 .btn.btn-outline-info-selected::after {

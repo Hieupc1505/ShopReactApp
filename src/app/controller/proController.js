@@ -1,7 +1,12 @@
+require("dotenv").con;
 const createError = require("http-errors");
 const proDB = require("../models/product");
 const userDB = require("../models/user");
 const cetegoryDB = require("../models/category");
+// const { MongoClient } = require("mongodb");
+// const client = new MongoClient(
+//     "mongodb+srv://hieupc:04092001hh@react-shop.lurdz.mongodb.net/react-app?retryWrites=true&w=majority"
+// );
 
 // const timeSlide = async (next) => {
 //     const data = await proDB
@@ -53,6 +58,61 @@ const saledSlide = async (num, next) => {
         .limit(num)
         .catch((err) => next(err));
     return data;
+};
+
+const getCategoryId = async (arrText) => {
+    return Promise.all(
+        arrText.map((text) => {
+            return cetegoryDB.find(
+                {
+                    name: {
+                        $regex: new RegExp(text),
+                    },
+                },
+                {
+                    _id: 1,
+                }
+            );
+        })
+    );
+};
+
+const handleQuerySearch = (query) => {
+    let arrText = query.split(" ");
+    let arrSearch = arrText.reduce(
+        (arr, text, index) => {
+            if (index == 1) arr[index - 1] += " " + text;
+            else if (index > 1) arr[index - 1] = arr[index - 2] + " " + text;
+            return arr;
+        },
+        [arrText[0]]
+    );
+    let res = [...arrSearch, ...arrText];
+    return res;
+};
+
+const getProByProName = (query) => {
+    const arrSearch = handleQuerySearch(query);
+    return Promise.all(
+        arrSearch.map((item) => {
+            return proDB.find(
+                {
+                    proName: {
+                        $regex: new RegExp(item),
+                    },
+                },
+                {
+                    _id: 1,
+                    proName: 1,
+                    proPrize: 1,
+                    proImage: 1,
+                    proPromo: 1,
+                    categoryId: 1,
+                    updateAt: 1,
+                }
+            );
+        })
+    );
 };
 
 class proControl {
@@ -134,81 +194,111 @@ class proControl {
     }
     //[GET] /api/products/search?q=...
     async searchPro(req, res, next) {
-        const q = req.query.q;
-
-        cetegoryDB
-            .find(
-                {
-                    name: {
-                        $regex: new RegExp(q),
-                    },
-                },
-                {
-                    name: 1,
-                },
-                function (err, data) {
-                    res.json({ data });
-                }
-            )
-            .limit(10);
-    }
-    //[GET] /api/page/search
-    async pageSearch(req, res, next) {
-        const query = req.query.q;
+        let q = req.query.q;
+        q = q.trim();
         try {
-            let page = [];
+            cetegoryDB
+                .find(
+                    {
+                        name: {
+                            $regex: new RegExp(q),
+                        },
+                    },
+                    {
+                        name: 1,
+                    },
+                    function (err, data) {
+                        res.json({ data });
+                    }
+                )
+                .limit(10);
 
-            const arrCateId = await cetegoryDB.find(
+            // await client.connect();
+            // let collection = client.db("react-app").collection("categories");
+
+            // const data = await collection
+            //     .aggregate([
+            //         {
+            //             $search: {
+            //                 autocomplete: {
+            //                     query: `${q}`,
+            //                     path: "name",
+            //                     fuzzy: {
+            //                         maxEdits: 2,
+            //                     },
+            //                 },
+            //             },
+            //         },
+            //         {
+            //             $limit: 5,
+            //         },
+            //         {
+            //             $project: {
+            //                 name: 1,
+            //             },
+            //         },
+            //     ])
+            //     .toArray();
+            // console.log(data);
+            // res.send({ data });
+        } catch (err) {
+            res.json({
+                success: false,
+                msg: err.message || "search categories fail!!",
+            });
+        }
+    }
+    //[GET] /api/page/searchtest
+
+    //[GET] /api/page/searchtest
+    async pageSearch(req, res, next) {
+        let query = req.query.q;
+        // const page = req.query.page;
+        query = query.trim();
+
+        let arrSearch = handleQuerySearch(query);
+
+        try {
+            let pros = [];
+            let arrCateId = await getCategoryId(arrSearch);
+            let newCateId = arrCateId.flatMap((item) => item);
+
+            let arrId = newCateId.reduce((arr, cate) => {
+                let check = arr.some(
+                    (item) => item._id.toString() === cate._id.toString()
+                );
+                if (check) return arr;
+                else {
+                    arr.push(cate);
+                    return arr;
+                }
+            }, []);
+
+            pros = await proDB.find(
                 {
-                    name: {
-                        $regex: new RegExp(query),
+                    categoryId: {
+                        $in: arrId,
                     },
                 },
                 {
                     _id: 1,
+                    proName: 1,
+                    proPrize: 1,
+                    proImage: 1,
+                    proPromo: 1,
+                    categoryId: 1,
+                    updateAt: 1,
                 }
             );
 
-            page = await proDB
-                .find(
-                    {
-                        categoryId: {
-                            $in: arrCateId,
-                        },
-                    },
-                    {
-                        _id: 1,
-                        proName: 1,
-                        proPrize: 1,
-                        proImage: 1,
-                        proPromo: 1,
-                        categoryId: 1,
-                    }
-                )
-                .limit(15);
-            if (page.length === 0) {
-                page = await proDB
-                    .find(
-                        {
-                            proName: {
-                                $regex: new RegExp(query),
-                            },
-                        },
-                        {
-                            _id: 1,
-                            proName: 1,
-                            proPrize: 1,
-                            proImage: 1,
-                            proPromo: 1,
-                            categoryId: 1,
-                        }
-                    )
-                    .limit(15);
-            }
+            const searchByProName = await getProByProName(query);
+            const arrPros = searchByProName.flatMap((item) => item);
 
             res.json({
                 success: true,
-                pros: page,
+                pros: [...pros, ...arrPros],
+                len1: pros.length,
+                len2: arrPros.length,
             });
         } catch (err) {
             res.status(err.status || 500).json({

@@ -7,10 +7,12 @@ import { searchProduct } from "../../Redux/ProductRedux/actionProduct";
 import { v4 as uuid4 } from "uuid";
 
 const Header = () => {
-    let { pathname } = useLocation();
+    // let { pathname } = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { isAuth, user, isLoad } = useSelector((state) => state.userAuth);
+    const { isAuth, user, isLoad, ref } = useSelector(
+        (state) => state.userAuth
+    );
     const { cart } = useSelector((state) => state.cartReducer);
     // const [flag, setFlag] = useState(false);
 
@@ -19,71 +21,68 @@ const Header = () => {
     }, [isAuth]);
 
     const onLogOut = async () => {
+        clearInterval(ref);
         await dispatch(userLogout());
         history.push("/");
     };
 
-    const searchVal = React.createRef();
-    const listSea = React.createRef();
-
     const [valInput, setValInput] = useState("");
-    const [store, setStore] = useState({
-        new: [],
-        old: [],
-    });
-    useEffect(() => {
-        const search = localStorage.getItem("search");
-        const data = search ? JSON.parse(search) : [];
-        setStore({
-            ...store,
-            old: data,
-        });
-    }, [localStorage.getItem("search")]);
+    const [store, setStore] = useState([]);
 
     const handleChangeInput = async (e) => {
         const text = e.target.value;
         setValInput(text);
         if (text !== "" && text.length >= 2) {
             let { data } = await dispatch(searchProduct(text));
-            setStore({
-                ...store,
-                new: data,
-            });
-        } else if (text === "") setStore({ ...store, new: [] });
+            setStore(data);
+        } else if (text === "") setStore([]);
+        else return;
     };
 
-    const addLocalStore = () => {
+    const addLocalString = (text) => {
+        text = text.trim();
         let oldArr = [];
         let local = localStorage.getItem("search");
         if (local) {
             let data = JSON.parse(local);
-            let check = data.indexOf(valInput);
-            if (check === -1) oldArr = [valInput, ...data];
+            let check = data.indexOf(text);
+            if (check === -1) oldArr = [text, ...data];
             else {
                 oldArr = [
-                    valInput,
+                    text,
                     ...data.slice(0, check),
                     ...data.slice(check + 1),
                 ];
             }
+        } else {
+            oldArr.push(text);
         }
-
         const arr = JSON.stringify(oldArr);
         localStorage.setItem("search", arr);
-        document.querySelector("input").blur();
-        history.push(`/page/search?q=${valInput}`);
     };
 
+    const LoadPageSearch = (text = null) => {
+        addLocalString(text || valInput);
+        document.querySelector("input").blur();
+
+        history.push(`/page/search?q=${text || valInput}`);
+    };
+    const handleClickSearch = () => {
+        if (valInput) LoadPageSearch();
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
         const list = e.target.parentElement.querySelector("ul");
         list.classList.remove("show-list");
-        addLocalStore();
+        valInput && LoadPageSearch();
     };
-    const handleClickItemSearch = (name) => {
+    const handleClickItemSearch = async (text) => {
+        // setValInput(name);
+        // if (name) addLocalStore();
+        LoadPageSearch(text);
+        setValInput(text);
+
         const list = document.querySelector(".header_list-search");
-        setValInput(name);
-        addLocalStore();
         list.classList.remove("d-block");
     };
 
@@ -115,20 +114,24 @@ const Header = () => {
         });
     }, [isAuth]);
 
-    useLayoutEffect(() => {
-        if (/(page\/search)/gi.test(pathname)) {
-            const arrSearch = JSON.parse(localStorage.getItem("search"));
-            setValInput(arrSearch[0]);
-        }
-    }, [pathname]);
+    // useLayoutEffect(() => {
+    //     if (/(page\/search)/gi.test(pathname)) {
+    //         const arrSearch = JSON.parse(localStorage.getItem("search"));
+    //         setValInput(arrSearch[0]);
+    //     }
+    // }, [pathname]);
 
     let style =
-        store.new.length > 0 || store.new.lenght > 0
+        store.length > 0 || store.lenght > 0
             ? {
                   border: "1px solid #d6cece9c",
                   boxShadow: "0 0 4px 1px #d7d0d09e",
               }
             : {};
+
+    let local = localStorage.getItem("search");
+    let arrOld = local ? JSON.parse(local) : [];
+
     return (
         <header>
             <div className="app grid wide">
@@ -388,20 +391,32 @@ const Header = () => {
                             <li className="header_nav-item header_nav-auth-account d-flex justify-content-center align-items-center position-relative">
                                 <span
                                     className="header_nav-auth-account-img me-2"
-                                    style={{
-                                        backgroundImage: `url('${user.avata}')`,
-                                    }}
+                                    style={
+                                        Object.keys(user.avata).lenght !== 0
+                                            ? {
+                                                  backgroundImage: `url('${user.avata.url}')`,
+                                              }
+                                            : {
+                                                  backgroundImage:
+                                                      "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
+                                              }
+                                    }
                                 ></span>
                                 <span className="header_nav-auth-account-name text-white">
                                     {user.userName}
                                 </span>
                                 <div className="header_nav-account-options dropdown-menu bridge arrow-top">
-                                    <div className="dropdown-item cursor-pointer">
-                                        Tài khản của tôi
-                                    </div>
+                                    <Link
+                                        to="/add/profile"
+                                        className="text-decoration-none"
+                                    >
+                                        <div className="dropdown-item cursor-pointer">
+                                            Tài khoản của tôi
+                                        </div>
+                                    </Link>
                                     <div className="dropdown-item cursor-pointer">
                                         <Link
-                                            className="text-decoration-none"
+                                            className="text-decoration-none text-secondary"
                                             to="/orders/status"
                                         >
                                             Đơn mua
@@ -469,16 +484,16 @@ const Header = () => {
                             "
                                 value={valInput}
                                 onChange={handleChangeInput}
-                                placeholder="Enter your name"
+                                placeholder="Vd: hot gril xx"
                             />
                         </form>
                         <i
                             className="fas fa-search search-product fs-6 rounded"
-                            onClick={addLocalStore}
+                            onClick={handleClickSearch}
                         ></i>
                         <ul className="header_list-search" style={style}>
-                            {store.new.length !== 0 &&
-                                store.new.map((item) => (
+                            {store.length !== 0 &&
+                                store.map((item) => (
                                     <li
                                         key={uuid4()}
                                         className="header_list-search-item"
@@ -489,8 +504,8 @@ const Header = () => {
                                         {item.name}
                                     </li>
                                 ))}
-                            {store.old.length !== 0 &&
-                                store.old.map((item) => (
+                            {arrOld !== 0 &&
+                                arrOld.map((item) => (
                                     <li
                                         key={uuid4()}
                                         className="header_list-search-item"

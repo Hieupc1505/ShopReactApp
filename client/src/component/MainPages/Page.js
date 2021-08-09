@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Container from "../Views/Container";
@@ -11,11 +11,13 @@ import axios from "axios";
 import setHeaderDefault from "./helpers/SetHeader";
 import { ACCESSTOKEN } from "./helpers/key";
 // import { SERVER } from "./helpers/key";
-import { USER_VERIFY } from "../../Redux/Auth/typeAuth";
+import { USER_VERIFY, SET_REFRESH_TOKEN_ID } from "../../Redux/Auth/typeAuth";
 import PageSearch from "./Search/PageSearch";
 import { Redirect, useLocation } from "react-router-dom";
 import Loading2 from "./utils/Loading/Loading2";
 import Order from "../MainPages/Order/Order";
+import ChatBox from "./utils/ChatBox/ChatBox";
+import Test from "../Views/Test";
 
 // axios.defaults.withCredentials = true;
 
@@ -53,10 +55,45 @@ const Page = ({ component }) => {
             });
         }
     };
+    const getRefreshToken = async () => {
+        const token = localStorage["ACCESSTOKEN"];
+        const res = await axios.get("/user/refresh_token", {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (res.data && res.data.success)
+            localStorage.setItem("ACCESSTOKEN", res.data.accessToken);
+        else {
+            localStorage.removeItem(ACCESSTOKEN);
+            setHeaderDefault(null);
+            dispatch({
+                type: USER_VERIFY, //
+                payload: {
+                    isAuth: false, //
+                    user: null,
+                },
+            });
+        }
+    };
 
     useEffect(() => {
         loadUser();
     }, []);
+
+    useEffect(() => {
+        if (isAuth) {
+            let ref = setInterval(getRefreshToken, 30000);
+            dispatch({
+                type: SET_REFRESH_TOKEN_ID,
+                payload: {
+                    ref,
+                },
+            });
+        }
+    }, [isAuth]);
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
@@ -87,6 +124,9 @@ const Page = ({ component }) => {
             {component === "loading" && <Loading />}
             {component === "payment" && <Payment />}
             {component === "search" && <PageSearch />}
+            {component === "profile" &&
+                !isLoad &&
+                (isAuth ? <Test /> : <Redirect to="/" />)}
             {component === "order" &&
                 !isLoad &&
                 (isAuth ? (
@@ -99,7 +139,7 @@ const Page = ({ component }) => {
                         }}
                     />
                 ))}
-
+            {isAuth && <ChatBox />}
             <Footer />
         </div>
     );

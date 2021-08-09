@@ -22,7 +22,6 @@ route.post("/upload", async (req, res) => {
                 .json({ success: false, msg: "No file were upload" });
 
         const isArr = Array.isArray(files);
-        console.log(isArr);
 
         if (isArr) {
             files.forEach((file) => {
@@ -102,7 +101,6 @@ route.post("/upload", async (req, res) => {
             }
         );
     } catch (err) {
-        console.log(err);
         return res.json({
             success: false,
             msg: "Internal server error",

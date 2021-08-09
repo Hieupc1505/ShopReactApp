@@ -42,10 +42,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.use((req, res, next) => {
+    console.log(req.url);
     next(createError.NotFound("Page is not found"));
 });
 app.use((err, req, res, next) => {
-    // console.log(err.message);
+    console.log(err.message);
     res.status(err.status || 500)
         .json({
             sucess: false,
@@ -56,5 +57,5 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log("App is running...!!");
+    console.log("App is running...!!" + port);
 });

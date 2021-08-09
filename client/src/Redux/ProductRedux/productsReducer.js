@@ -10,6 +10,7 @@ import { PAGE_SEARCH_REQUEST } from "./typeProduct";
 import { CLIENT_REQUEST } from "./typeProduct";
 import { CLIENT_REQUEST_END } from "./typeProduct";
 import { REQUEST_FAIL } from "./typeProduct";
+import { SORT_PRODUCTS } from "./typeProduct";
 
 export const productsReducer = (
     state = { products: [], isLoad: true },
@@ -29,6 +30,7 @@ export const productsReducer = (
                 isLoad: true,
             };
         case ALL_PRODUCT_SUCCESS:
+        case SORT_PRODUCTS:
             return {
                 isLoad: false,
                 products: payload.pros,

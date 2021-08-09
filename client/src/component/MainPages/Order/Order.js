@@ -129,10 +129,7 @@ const Order = () => {
                             </div>
                             <div className="l-2 d-flex">
                                 <div className="btn btn-sm btn-outline-info">
-                                    Xoá
-                                </div>
-                                <div className="btn btn-sm btn-outline-info">
-                                    Sửa
+                                    Chi tiết
                                 </div>
                             </div>
                         </li>

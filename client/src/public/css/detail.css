@@ -177,3 +177,7 @@ textarea {
 .product_info-img-main:hover .img-zoom-result {
     display: block;
 }
+
+.product-mark-liked + small {
+    color: red;
+}

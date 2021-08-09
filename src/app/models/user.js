@@ -26,9 +26,8 @@ const userSchema = new Schema(
             },
         },
         avata: {
-            type: String,
-            default:
-                "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
+            type: Object,
+            default: {},
         },
         cart: {
             type: Array,

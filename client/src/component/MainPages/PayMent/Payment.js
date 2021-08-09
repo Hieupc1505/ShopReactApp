@@ -13,13 +13,14 @@ import Loading2 from "../utils/Loading/Loading2";
 // import { SERVER } from "../helpers/key";
 import axios from "axios";
 import { OrderPost, postCart } from "../../../Redux/Cart/actionCard";
+import Authorization from "../Auth/Authorization";
 
 const Payment = () => {
     const dispatch = useDispatch();
     const { search } = useLocation();
     // const [param, setParam] = useState(null);
 
-    const { user } = useSelector((state) => state.userAuth);
+    const { user, isLoad: loadUser } = useSelector((state) => state.userAuth);
     const { cart, isLoad } = useSelector((state) => state.cartReducer);
 
     const [flag, setFlag] = useState({
@@ -38,6 +39,7 @@ const Payment = () => {
         lev3: -1,
         data: [],
         val: "",
+        errVal: null,
     });
     const [dataForm, setDataForm] = useState({
         name: "",
@@ -78,6 +80,7 @@ const Payment = () => {
                 lev3: -1,
                 data: [],
                 val: user.address ? user.address.main : "",
+                errVal: null,
             });
         }
     }, [userMark]);
@@ -107,9 +110,8 @@ const Payment = () => {
 
     useEffect(() => {
         // console.log(flag.num + "\n" + user.mark + "\n" + flag.type);
-        console.log(flag.num + "\n" + flag.type);
 
-        if (flag.num === 0 && !isLoad && user && user.mark !== null) {
+        if (flag.num === 0 && !isLoad && !loadUser) {
             let ipTop = document.querySelectorAll("input.text-to-top"); //eff
             let textTop = document.querySelectorAll(".form-text-top"); // topcd
 
@@ -162,14 +164,14 @@ const Payment = () => {
             });
         }
 
-        if (flag.type === "put" && flag.num === 0) {
+        if (flag.type === "put" && flag.num === 0 && !loadUser) {
             let ipTop = document.querySelectorAll("input.text-to-top"); //eff
             let textTop = document.querySelectorAll(".form-text-top"); //
             for (let i = 0; i < textTop.length; i++) {
                 textTop[i].classList.add("after-effect");
             }
         }
-    }, [user, flag.type, flag.num]);
+    }, [isLoad, loadUser, flag.num]);
 
     useEffect(() => {
         if (play === 1) {
@@ -263,13 +265,24 @@ const Payment = () => {
                 des: comment,
             },
         };
-        if (flag.type === "post") await dispatch(sendProfileForm(data));
-        else if ((flag.type = "put")) {
-            await dispatch(updateProfile(data));
-            setFlag({
-                ...flag,
-                num: 1,
+
+        const enSub = Authorization.handleSubmit();
+
+        if (!val) {
+            setControl({
+                ...ctrl,
+                errVal: true,
             });
+        }
+        if (val && !enSub) {
+            if (flag.type === "post") await dispatch(sendProfileForm(data));
+            else if ((flag.type = "put")) {
+                await dispatch(updateProfile(data));
+                setFlag({
+                    ...flag,
+                    num: 1,
+                });
+            }
         }
     };
     let [check, setCheck] = useState(0);
@@ -278,6 +291,7 @@ const Payment = () => {
         setCheck(tar);
     };
     const handlePayOnline = async () => {
+        if (pros.length === 0) window.location.href = "/";
         if (check === 1) {
             const { data } = await axios.post(`/order/create_payment_url`, {
                 amount: `${dataPro.total}`,
@@ -322,7 +336,6 @@ const Payment = () => {
             setLoading(false);
         }
     };
-
     useEffect(
         () =>
             (async () => {
@@ -330,7 +343,6 @@ const Payment = () => {
                     const { data } = await axios.get(
                         `/order/vnpay_return${search}`
                     );
-                    console.log(isLoad);
                     if (
                         data.msg["vnp_ResponseCode"] === "00" &&
                         pros.length > 0
@@ -348,7 +360,6 @@ const Payment = () => {
                         const order = dataPro.pros.map((item) => {
                             return { num: item.num, _id: item._id };
                         });
-                        console.log(order);
                         await dispatch(
                             OrderPost({
                                 userInfo,
@@ -371,6 +382,16 @@ const Payment = () => {
             })(),
         [search, dataPro.pros]
     );
+    useEffect(() => {
+        if (flag.num === 0)
+            Authorization({
+                formName: "addr",
+                rules: [
+                    Authorization.isRequired("#Name", "Vui lòng nhập tên"),
+                    Authorization.isNumber("#number", "Vui lòng nhập đúng sđt"),
+                ],
+            });
+    });
 
     const handleChangeInput = () => {};
     if (!isLoad && !Loading && pros.length === 0) return <Redirect to="/" />;
@@ -382,7 +403,7 @@ const Payment = () => {
                         <div
                             className="dialog-address position-fixed w-100 h-100"
                             style={{
-                                zIndex: "2",
+                                zIndex: "10",
                                 top: "0",
                                 left: "0",
                                 right: "0",
@@ -398,6 +419,7 @@ const Payment = () => {
                                     action="#"
                                     className="form p-4"
                                     onSubmit={handleSubmitForm}
+                                    name="addr"
                                 >
                                     <div className="d-flex">
                                         <div className="form-group me-1">
@@ -412,6 +434,7 @@ const Payment = () => {
                                                 value={name}
                                                 onChange={onChangeInput}
                                             />
+                                            <span className="email-err form-err"></span>
                                         </div>
                                         <div className="form-group ms-1">
                                             <div className="form-text-top px-1">
@@ -425,6 +448,7 @@ const Payment = () => {
                                                 value={number}
                                                 onChange={onChangeInput}
                                             />
+                                            <span className="email-err form-err"></span>
                                         </div>
                                     </div>
                                     <div className="form-add-wrap mt-3">
@@ -441,7 +465,18 @@ const Payment = () => {
                                                 value={val}
                                                 onChange={handleChangeInput}
                                                 autoComplete="off"
+                                                onFocus={() =>
+                                                    setControl({
+                                                        ...ctrl,
+                                                        errVal: null,
+                                                    })
+                                                }
                                             />
+                                            {ctrl.errVal && (
+                                                <span className="email-err form-err">
+                                                    Vui lòng nhập địa chỉ
+                                                </span>
+                                            )}
                                         </div>
                                         {play === 1 && (
                                             <div className="form-add-list border rounded mt-3">
@@ -563,18 +598,17 @@ const Payment = () => {
                                             Văn phòng
                                         </div>
                                     </div>
-                                    <div className="mt-4 text-right d-flex">
-                                        <div
-                                            className="
-                                    btn btn-outline-secondary
-                                    
-                                    ms-auto
-                                    me-2
+                                    <div className="justify-content-end mt-4 text-right d-flex">
+                                        {user.mark !== 0 && (
+                                            <div
+                                                className="
+                                    btn btn-outline-secondary me-2
                                 "
-                                            onClick={cancel}
-                                        >
-                                            Trở lại
-                                        </div>
+                                                onClick={cancel}
+                                            >
+                                                Trở lại
+                                            </div>
+                                        )}
                                         <button
                                             type="submit"
                                             className="btn btn-primary"

@@ -13,6 +13,7 @@ import {
     CLIENT_REQUEST,
     CLIENT_REQUEST_END,
     REQUEST_FAIL,
+    SORT_PRODUCTS,
 } from "./typeProduct";
 
 // export const getProsByCateId = (categoryId) => async (dispatch) => {
@@ -30,6 +31,26 @@ import {
 //     dispatch({ type: CLIENT_REQUEST_END });
 //     return data;
 // };
+
+export const sortPros = (sortType) => async (dispatch, getState) => {
+    const state = getState();
+    const { products } = state;
+    switch (sortType) {
+        case "prizeaz":
+            dispatch({ type: CLIENT_REQUEST });
+            products.sort((a, b) => (a.proPrize > b.proPrize ? 1 : -1));
+            dispatch({
+                type: SORT_PRODUCTS,
+                payload: {
+                    pros: products,
+                },
+            });
+            break;
+
+        default:
+            dispatch({ type: "DEFAULT" });
+    }
+};
 
 export const getCategory = () => async (dispatch) => {
     dispatch({ type: CLIENT_REQUEST });
@@ -49,7 +70,7 @@ export const pageSearch = (query) => async (dispatch) => {
     try {
         dispatch({ type: PAGE_SEARCH_REQUEST });
 
-        const { data } = await axios.get(`/api/page/search${query}`);
+        const { data } = await axios.get(`/api/page/search${query}&page=1`);
         dispatch({
             type: CLIENT_REQUEST_END,
         });

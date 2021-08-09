@@ -87,6 +87,16 @@ Authorization.minLength = function (select, min = 6, mes) {
         },
     };
 };
+Authorization.maxLength = function (select, max = 6, mes) {
+    return {
+        ele: select,
+        test: (val) => {
+            return val.length >= max
+                ? null
+                : mes || `Maximum of password is ${max} charactors`;
+        },
+    };
+};
 
 Authorization.isEmail = function (select, mes) {
     return {
@@ -104,6 +114,16 @@ Authorization.compare = function (select, tar) {
         ele: select,
         test: function (val) {
             return val === tar() ? null : "Không khớp vui lòng kiểm tra lại";
+        },
+    };
+};
+Authorization.isNumber = function (select, tar) {
+    return {
+        ele: select,
+        test: function (val) {
+            return /\d{10}/.test(val) && val.length === 10
+                ? null
+                : "Vui lòng nhập đúng số";
         },
     };
 };

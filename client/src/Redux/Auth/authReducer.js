@@ -14,6 +14,7 @@ import {
     REQUEST_FAIL,
     USER_FORGET_SENDEMAIL,
     USER_FORGET_RESET,
+    SET_REFRESH_TOKEN_ID,
 } from "./typeAuth";
 
 const userState = {
@@ -26,6 +27,11 @@ export const userAuth = (state = userState, action) => {
     const { type, payload } = action;
 
     switch (type) {
+        case SET_REFRESH_TOKEN_ID:
+            return {
+                ...state,
+                ref: payload.ref,
+            };
         case USER_LOGIN_REQUEST:
         case USER_UPLOAD_REQUEST:
             return {

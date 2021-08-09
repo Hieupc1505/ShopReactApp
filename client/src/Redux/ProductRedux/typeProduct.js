@@ -11,4 +11,5 @@ export const PAGE_SEARCH_REQUEST = "PAGE_SEARCH_REQUEST";
 export const CLIENT_REQUEST = "CLIENT_REQUEST";
 export const CLIENT_REQUEST_END = "CLIENT_REQUEST_END";
 export const REQUEST_FAIL = "REQUEST_FAIL";
+export const SORT_PRODUCTS = "SORT_PRODUCTS";
 export const SERVER = "http://localhost:5000";

@@ -55,6 +55,7 @@ class userCtl {
                 { email, password: hashPass },
                 "2h"
             );
+            console.log(tokenActivate);
             const url = `${URL}/user/activate/${tokenActivate}`;
 
             sendMail(email, url, "validate your email address");
@@ -114,9 +115,11 @@ class userCtl {
                     );
                 const access = await getAccessToken({ id: data.id }, "2h");
                 const refresh = await getRefreshToken({ id: data.id }, "2d");
-                res.status(200)
-                    .cookie("_token", refresh)
-                    .json({ accessToken: token });
+
+                res.status(200).cookie("_token", refresh).json({
+                    success: true,
+                    accessToken: access,
+                });
             });
         } catch (err) {
             res.status(500).json({

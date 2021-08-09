@@ -2,12 +2,13 @@ POST http://localhost:5000/user/register
 Content-Type: application/json
 
 {
-    "email" : "addnewEmail3@gmail.com", 
+    "email" : "addnewEmailnew2@gmail.com", 
     "password" : "11223344"
 }
 
 ### 
-GET http://localhost:5000/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsM0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRrVk5sUXhVdDZrcE1DeG9LYVVsdGZ1QUVWTHpBaDdIUjRFejdYOXVoNm9IWFdGTzFyZGpOVyIsImlhdCI6MTYyNzM5OTc0NiwiZXhwIjoxNjI3NDA2OTQ2fQ.ZhyIdyvjb8Xke3ax-peCQ67_IdJclRAUzOy2dFjTM3I
+GET http://localhost:5000/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsbmV3MkBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRYRy5ZVG12dnpBS2NMVzh6Ny9PT2l1LzdvbEhvV0FoVG44amtrM2hyVzVIMFRaN0hBaWs4cSIsImlhdCI6MTYyODA0MDQ0OCwiZXhwIjoxNjI4MDQ3NjQ4fQ.lGcscWiWAnnbrjWnmuEZFtaqoGc3RJRgE8PaT10ePf4
+
 
 
 ###
@@ -71,7 +72,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyN
 ### 
 GET http://localhost:5000/api/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNTkxNmMxZjRkMzk0MGNhNjAyYiIsImlhdCI6MTYyNjY5MDA3NCwiZXhwIjoxNjI2ODYyODc0fQ.NUmnpWvXiS-_lZ4uJOzpw8bafnIdt-8DLOkEiK4vmho
+
 ### 
 GET http://localhost:5000/user/refresh_token
 
@@ -91,7 +92,7 @@ GET http://localhost:5000/api/cart/add/:id
 GET http://localhost:5000/api/products/search?q=quần
 
 ###
-GET http://localhost:5000/api/page/search?q=phong
+GET http://localhost:5000/api/page/search?q=áo
 
 ###
 GET http://localhost:5000/api/slide?type=prize
@@ -135,3 +136,18 @@ Content-Type: application/json
 {
     "password" : "04092001hh"
 }
+
+###
+GET http://localhost:7000/chat/read
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDAyNjYxYjIyMzM4MWRhY2Q3ZmM4OCIsImlhdCI6MTYyODA1NDUxNywiZXhwIjoxNjI4MDYxNzE3fQ.TTOmS4zCb74rkkQoHHk2CaURBOvYiZjW1JJS8JZ4w0U
+
+# {
+#     "mes" : "The first comment"
+# }
+
+
+### 
+GET https://sheltered-headland-14034.herokuapp.com/api/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsbmV3MkBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRYRy5ZVG12dnpBS2NMVzh6Ny9PT2l1LzdvbEhvV0FoVG44amtrM2hyVzVIMFRaN0hBaWs4cSIsImlhdCI6MTYyODA0MDQ0OCwiZXhwIjoxNjI4MDQ3NjQ4fQ.lGcscWiWAnnbrjWnmuEZFtaqoGc3RJRgE8PaT10ePf4

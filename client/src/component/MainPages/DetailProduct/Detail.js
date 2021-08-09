@@ -25,7 +25,6 @@ const Detail = () => {
     // const { proImage } = product ? product : null;
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const [slideCol, setSlideCol] = useState(null);
     const [comment, setComment] = useState([
         {
@@ -74,15 +73,19 @@ const Detail = () => {
         setVal(text);
     };
     const addComment = () => {
-        let data = {
-            name: user.userName,
-            img: "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
-            comment: val,
-            time: dateFormat(),
-        };
-        if (val !== "") {
-            setComment([...comment, data]);
-            setVal("");
+        if (!isAuth) {
+            alert("You have to login");
+        } else {
+            let data = {
+                name: user.userName,
+                img: "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
+                comment: val,
+                time: dateFormat(),
+            };
+            if (val !== "") {
+                setComment([...comment, data]);
+                setVal("");
+            }
         }
     };
     const [link, setLink] = useState(null);
@@ -256,13 +259,19 @@ const Detail = () => {
                                         )}
                                     <span className="under">đ</span>
                                 </h2>
-                                <div className="details-prize-old text-through mx-3  text-muted">
-                                    {product._id && handleNum(product.proPrize)}
-                                    <span className="under">đ</span>
-                                </div>
-                                <small className="sell bg-danger px-2 text-white rounded font-weight-bold">
-                                    -{product._id && product.proPromo}%
-                                </small>
+
+                                {product.proPromo !== 0 && (
+                                    <>
+                                        <div className="details-prize-old text-through mx-3  text-muted">
+                                            {product._id &&
+                                                handleNum(product.proPrize)}
+                                            <span className="under">đ</span>
+                                        </div>
+                                        <small className="sell bg-danger px-2 text-white rounded font-weight-bold">
+                                            -{product._id && product.proPromo}%
+                                        </small>
+                                    </>
+                                )}
                             </div>
                             <div className="details-status">
                                 Trạng thái :
