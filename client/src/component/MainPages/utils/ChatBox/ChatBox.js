@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
 import io from "socket.io-client";
 import "./chatbox.css";
 import axios from "axios";
@@ -13,6 +13,7 @@ const ChatBox = () => {
         chats: [],
         onl: 0,
     });
+    let text = useRef();
 
     useEffect(() => {
         socket.on("usercn", (payload) => {
@@ -81,20 +82,13 @@ const ChatBox = () => {
         return !!check;
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await sendMess();
-        setMes("");
-        document.querySelector("input.input-chat").blur();
-    };
-
-    const sendMess = async () => {
-        const check = validMes(mes);
-        if (mes && !check && isAuth) {
+    const sendMess = async (text) => {
+        const check = validMes(text);
+        if (text && !check && isAuth) {
             const createdAt = new Date().toISOString();
             const payload = {
                 name: user.userName,
-                mes,
+                mes: text,
                 avata: user.avata,
                 createdAt,
                 userId: user.userId,
@@ -102,12 +96,20 @@ const ChatBox = () => {
             socket.emit("message", payload);
 
             await axios.post("/chat/add", {
-                mes,
+                mes: text,
             });
         } else {
             alert("Cái Loại mất dạy!!");
         }
         setShow({ ...show, send: false });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        document.querySelector("input.input-chat").blur();
+        text.current = mes;
+        setMes("");
+        await sendMess(text.current);
     };
 
     const chatRender = () => {
@@ -129,7 +131,11 @@ const ChatBox = () => {
                         key={index}
                     >
                         <img
-                            src={avata}
+                            src={
+                                user.avata
+                                    ? user.avata.url
+                                    : "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png"
+                            }
                             alt="avatar"
                             className="list-chat-img me-2"
                         />
