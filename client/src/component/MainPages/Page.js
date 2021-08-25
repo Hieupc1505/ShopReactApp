@@ -85,7 +85,7 @@ const Page = ({ component }) => {
 
     useEffect(() => {
         if (isAuth) {
-            let ref = setInterval(getRefreshToken, 30000);
+            let ref = setInterval(getRefreshToken, 1 * 55 * 1000);
             dispatch({
                 type: SET_REFRESH_TOKEN_ID,
                 payload: {

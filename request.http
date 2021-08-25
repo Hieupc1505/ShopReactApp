@@ -16,7 +16,7 @@ POST http://localhost:5000/user/login
 Content-Type: application/json
 
 {
-    "email" : "addnewemail3@gmail.com", 
+    "email" : "kkz45943@cuoly.com", 
     "password" : "11223344"
 }
 
@@ -70,11 +70,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNWYyN
 
 
 ### 
-GET http://localhost:5000/api/products
+GET http://localhost:5000/api/products?num=10
 Content-Type: application/json
 
 ### 
 GET http://localhost:5000/user/refresh_token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGY0NGU4ZmZmZmQzM2QwYzljOWUzOCIsImlhdCI6MTYyODQwMzE3MCwiZXhwIjoxNjI4NDEwMzcwfQ.qarfdd8O6Ef4QHSMfkr48xUjP-kS51XhlauPAmj7sEk
 
 ###
 GET http://localhost:5000/api/products/60f544e0db9bf7089c3cade0
@@ -89,10 +90,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZjQzNTkxN
 GET http://localhost:5000/api/cart/add/:id
 
 ###
-GET http://localhost:5000/api/products/search?q=quần
+GET http://localhost:5000/api/products/search?q=áo
 
 ###
-GET http://localhost:5000/api/page/search?q=áo
+GET http://localhost:5000/api/page/search?q=quần%20ống
+
+###
+GET http://localhost:5000/api/page/search?q=áo%20hồ&page=2
 
 ###
 GET http://localhost:5000/api/slide?type=prize
@@ -138,16 +142,46 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:7000/chat/read
+GET https://serverchat69.herokuapp.com/chat/read
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDAyNjYxYjIyMzM4MWRhY2Q3ZmM4OCIsImlhdCI6MTYyODA1NDUxNywiZXhwIjoxNjI4MDYxNzE3fQ.TTOmS4zCb74rkkQoHHk2CaURBOvYiZjW1JJS8JZ4w0U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDc5NjE2OGFlMjBhMzE5YzBiNWU0NCIsImlhdCI6MTYyODI2OTU2MywiZXhwIjoxNjI4Mjc2NzYzfQ.LvsuiB9VUVioXMVaQ7cASJq0ykz2aHx1OrlrQo8oT2E
 
 # {
 #     "mes" : "The first comment"
 # }
+
+###
+POST https://serverchat69.herokuapp.com/chat/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMDc5NjE2OGFlMjBhMzE5YzBiNWU0NCIsImlhdCI6MTYyODI2OTU2MywiZXhwIjoxNjI4Mjc2NzYzfQ.LvsuiB9VUVioXMVaQ7cASJq0ykz2aHx1OrlrQo8oT2E
+
+{
+    "mes" : "The first comment"
+}
+
+
 
 
 ### 
 GET https://sheltered-headland-14034.herokuapp.com/api/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsbmV3MkBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRYRy5ZVG12dnpBS2NMVzh6Ny9PT2l1LzdvbEhvV0FoVG44amtrM2hyVzVIMFRaN0hBaWs4cSIsImlhdCI6MTYyODA0MDQ0OCwiZXhwIjoxNjI4MDQ3NjQ4fQ.lGcscWiWAnnbrjWnmuEZFtaqoGc3RJRgE8PaT10ePf4
+###
+POST http://localhost:5000/service/destroy
+Content-Type: application/json
+
+{
+    "public_id" : "shopfull/p7zvwdqotrrbwzntgd1a"
+}
+
+###
+GET https://demoshop69.herokuapp.com/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVmYjQ2ODAwQHp3b2hvLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGwzNzhIZ25NOEIuMFJWaVpyREgwR09JNmZIUjhZeGVuV09SVElqTVRmVVZvWEczN1VLc2x5IiwiaWF0IjoxNjI4NDg1ODczLCJleHAiOjE2Mjg0OTMwNzN9.m0J0GNauQjxcXiIhEIMwwHkt-MOwqcgTdCHKWhscBYc
+
+### 
+POST https://ankiweb.net/decks/select/did1587114675822
+Cookie: ankiweb=eyJrIjogImNicXhCM293R2ZrdGVWU0siLCAiYyI6IDIsICJ0IjogMTYyODk1MDczOH0.kUoinib3uqpeLfi0qtKGf7sPQU0d8Xozq5Srjh77SVY
+
+### 
+POST https://ankiuser.net/study/getCards
+Content-Type: application/json
+Cookie: ankiweb=eyJrIjogImNicXhCM293R2ZrdGVWU0siLCAiYyI6IDIsICJ0IjogMTYyODk1MDczOH0.kUoinib3uqpeLfi0qtKGf7sPQU0d8Xozq5Srjh77SVY
