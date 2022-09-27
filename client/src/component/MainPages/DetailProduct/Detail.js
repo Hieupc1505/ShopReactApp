@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, useLocation } from "react-router-dom";
 import Slide from "../utils/Slide/Slide";
 import handleNum from "../helpers/handleNum";
 import { useSelector, useDispatch } from "react-redux";
@@ -23,14 +23,18 @@ const Detail = () => {
     const { isAuth, user } = useSelector((state) => state.userAuth);
     const { cart } = useSelector((state) => state.cartReducer);
     // const { proImage } = product ? product : null;
-
+    const location = useLocation();
+    // console.log(location);
     const dispatch = useDispatch();
+    const history = useHistory();
+
     const [slideCol, setSlideCol] = useState(null);
     const [comment, setComment] = useState([
         {
             name: "Lớp trưởng",
             img: "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
-            comment: "Sản phẩm tốt nhưng shipper hơi hãm xíu? Nhìn chung oki",
+            comment:
+                "Sản phẩm tốt nhưng shipper hơi hãm xíu? Nhìn chung vai ca oki",
             time: "20-6-2021 20:15",
             rate: true,
         },
@@ -47,6 +51,7 @@ const Detail = () => {
     // console.log(slideCol);
     useEffect(() => {
         dispatch(getProductById(proId));
+        setNum(1);
     }, [proId]);
 
     const [num, setNum] = useState(1);
@@ -56,12 +61,16 @@ const Detail = () => {
             await dispatch(AddToCart(product, num));
         } else {
             alert("You have to login");
+            history.push({
+                pathname: "/login",
+                state: { from: location.pathname },
+            });
         }
     };
 
     const onModifyNum = (n) => {
         return function () {
-            setNum(num + n);
+            num === 0 && n === -1 ? setNum(num) : setNum(num + n);
         };
     };
     const onLikeProduct = (e) => {
@@ -73,19 +82,15 @@ const Detail = () => {
         setVal(text);
     };
     const addComment = () => {
-        if (!isAuth) {
-            alert("You have to login");
-        } else {
-            let data = {
-                name: user.userName,
-                img: "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
-                comment: val,
-                time: dateFormat(),
-            };
-            if (val !== "") {
-                setComment([...comment, data]);
-                setVal("");
-            }
+        let data = {
+            name: user.userName,
+            img: "https://res.cloudinary.com/develope-app/image/upload/v1626161751/images_j0qqj4.png",
+            comment: val,
+            time: dateFormat(),
+        };
+        if (val !== "") {
+            setComment([...comment, data]);
+            setVal("");
         }
     };
     const [link, setLink] = useState(null);
@@ -259,19 +264,13 @@ const Detail = () => {
                                         )}
                                     <span className="under">đ</span>
                                 </h2>
-
-                                {product.proPromo !== 0 && (
-                                    <>
-                                        <div className="details-prize-old text-through mx-3  text-muted">
-                                            {product._id &&
-                                                handleNum(product.proPrize)}
-                                            <span className="under">đ</span>
-                                        </div>
-                                        <small className="sell bg-danger px-2 text-white rounded font-weight-bold">
-                                            -{product._id && product.proPromo}%
-                                        </small>
-                                    </>
-                                )}
+                                <div className="details-prize-old text-through mx-3  text-muted">
+                                    {product._id && handleNum(product.proPrize)}
+                                    <span className="under">đ</span>
+                                </div>
+                                <small className="sell bg-danger px-2 text-white rounded font-weight-bold">
+                                    -{product._id && product.proPromo}%
+                                </small>
                             </div>
                             <div className="details-status">
                                 Trạng thái :
@@ -470,7 +469,6 @@ const Detail = () => {
                                             <h5
                                                 className="product-list-rate-text d-block px-3 
                                         font-weight-bold
-
                                         "
                                             >
                                                 1 sao
@@ -495,7 +493,6 @@ const Detail = () => {
                                             <h5
                                                 className="product-list-rate-text d-block px-3 
                                             font-weight-bold
-
                                         "
                                             >
                                                 2 sao
@@ -520,7 +517,6 @@ const Detail = () => {
                                             <h5
                                                 className="product-list-rate-text d-block px-3 
                                             font-weight-bold
-
                                         "
                                             >
                                                 3 sao
@@ -545,7 +541,6 @@ const Detail = () => {
                                             <h5
                                                 className="product-list-rate-text d-block px-3 
                                         font-weight-bold
-
                                         "
                                             >
                                                 4 sao
@@ -570,7 +565,6 @@ const Detail = () => {
                                             <h5
                                                 className="product-list-rate-text d-block px-3 
                                             font-weight-bold
-
                                         "
                                             >
                                                 5 sao

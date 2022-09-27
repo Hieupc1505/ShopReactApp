@@ -7,7 +7,7 @@ import { USER_VERIFY } from "../../Redux/Auth/typeAuth";
 import { useDispatch, useSelector } from "react-redux";
 
 const ProtectedRouteAdmin = ({ component: Component, ...rest }) => {
-    const { user, isAuth, isLoad } = useSelector((state) => state.userAuth);
+    const { user, isAuth } = useSelector((state) => state.userAuth);
 
     const dispatch = useDispatch();
 

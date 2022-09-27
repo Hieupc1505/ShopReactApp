@@ -52,14 +52,16 @@ const ChatBox = () => {
     useEffect(
         () =>
             (async () => {
-                const { data } = await axios
+                const resp = await axios
                     .get("/chat/read")
                     .catch((err) => console.log(err));
-                if (data && data.success) {
-                    setChat({
-                        ...chat,
-                        chats: [...data.chat],
-                    });
+                if (resp) {
+                    if (resp.data && resp.data.success) {
+                        setChat({
+                            ...chat,
+                            chats: [...resp.data.chat],
+                        });
+                    }
                 }
             })(),
 

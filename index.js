@@ -45,6 +45,7 @@ app.use((req, res, next) => {
     console.log(req.url);
     next(createError.NotFound("Page is not found"));
 });
+
 app.use((err, req, res, next) => {
     console.log(err.message);
     res.status(err.status || 500)

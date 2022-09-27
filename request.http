@@ -2,22 +2,26 @@ POST http://localhost:5000/user/register
 Content-Type: application/json
 
 {
-    "email" : "addnewEmailnew2@gmail.com", 
-    "password" : "11223344"
+    "email" : "vanhieu3668@gmail.com", 
+    "password" : "A11223344"
 }
+###
+GET https://bit.ly/tiengruoi
 
+
+###
+GET https://league99.herokuapp.com/api/sports/england/charts/0
 ### 
-GET http://localhost:5000/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkZG5ld0VtYWlsbmV3MkBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRYRy5ZVG12dnpBS2NMVzh6Ny9PT2l1LzdvbEhvV0FoVG44amtrM2hyVzVIMFRaN0hBaWs4cSIsImlhdCI6MTYyODA0MDQ0OCwiZXhwIjoxNjI4MDQ3NjQ4fQ.lGcscWiWAnnbrjWnmuEZFtaqoGc3RJRgE8PaT10ePf4
-
-
-
+GET http://localhost:5000/user/activate/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmhpZXUzNjY4QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJDROWkI0dkh2ZE1XSGh1dUIvL0NRQmVBby9lWG9IdXJqZ2RvNXVXazdubXZVcHdJUGZYbXNLIiwiaWF0IjoxNjYwODM0OTE5LCJleHAiOjE2NjA4NDIxMTl9.UcW6Xz0bitKIf_9yJe1kDkc7ZssP5NAxLCJvsyG2I8M
+###
+GET http://localhost:5000/user/activate/sadfasdfet
 ###
 POST http://localhost:5000/user/login
 Content-Type: application/json
 
 {
-    "email" : "kkz45943@cuoly.com", 
-    "password" : "11223344"
+    "email" : "vanhieu3668@gmail.com", 
+    "password" : "A11223344"
 }
 
 ###
@@ -185,3 +189,11 @@ Cookie: ankiweb=eyJrIjogImNicXhCM293R2ZrdGVWU0siLCAiYyI6IDIsICJ0IjogMTYyODk1MDcz
 POST https://ankiuser.net/study/getCards
 Content-Type: application/json
 Cookie: ankiweb=eyJrIjogImNicXhCM293R2ZrdGVWU0siLCAiYyI6IDIsICJ0IjogMTYyODk1MDczOH0.kUoinib3uqpeLfi0qtKGf7sPQU0d8Xozq5Srjh77SVY
+
+### 
+GET https://drive.google.com/u/2/get_video_info?docid=1cZKy4B14W8HZdaZ3wJt4MvhL-Y83kyO2&drive_originator_app=303
+
+
+###
+GET http://localhost:3000/user/info
+Content-Type: application/json

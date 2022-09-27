@@ -58,7 +58,7 @@ class userCtl {
             const url = `${URL}/user/activate/${tokenActivate}`;
 
             sendMail(email, url, "validate your email address");
-
+            console.log(tokenActivate);
             res.status(200).json({
                 success: true, //
                 msg: "Please check your email to activate your account",
@@ -177,26 +177,32 @@ class userCtl {
     }
     // [POST] /user/forget
     async forgetPass(req, res, next) {
-        const { email } = req.body;
+        try {
+            const { email } = req.body;
 
-        const acc = await accDB.findOne({ email }).catch((err) => next(err));
+            const acc = await accDB
+                .findOne({ email })
+                .catch((err) => next(err));
 
-        if (!acc) next(createError.BadRequest("Email chưa đăng ký!!"));
+            if (!acc) next(createError.BadRequest("Email chưa đăng ký!!"));
 
-        const tokenForget = await getAccessToken(
-            {
-                _id: acc._id,
-            },
-            "10m"
-        );
+            const tokenForget = await getAccessToken(
+                {
+                    _id: acc._id,
+                },
+                "10m"
+            );
 
-        const url = `${URL}/user/forget/account/${tokenForget}`;
-        // console.log(tokenForget);
-        sendMail(email, url, "reset password");
-        res.status(200).json({
-            success: true,
-            msg: "Vui lòng kiểm tra Email để đặt lại mật khẩu!!",
-        });
+            const url = `${URL}/user/forget/account/${tokenForget}`;
+            // console.log(tokenForget);
+            sendMail(email, url, "reset password");
+            res.status(200).json({
+                success: true,
+                msg: "Vui lòng kiểm tra Email để đặt lại mật khẩu!!",
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
     //[POST] /forget/account/:token
     async resetPass(req, res, next) {

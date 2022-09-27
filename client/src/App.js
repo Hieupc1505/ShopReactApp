@@ -8,8 +8,8 @@ import ProtectedRouteAdmin from "./component/ProtectdRouteAdmin/ProtectedRouteAd
 import Test from "./component/Views/Test";
 // import ProtectedRoute from "./component/MainPages/utils/UploadImg/ProtectedRoute/ProtectedRoute";
 // import Cart from "./component/MainPages/Cart/Cart";
-import ChatBox from "./component/MainPages/utils/ChatBox/ChatBox";
-import LoadingSvg from "./component/MainPages/utils/Loading/LoadSvg";
+// import ChatBox from "./component/MainPages/utils/ChatBox/ChatBox";
+// import LoadingSvg from "./component/MainPages/utils/Loading/LoadSvg";
 
 function App() {
     return (

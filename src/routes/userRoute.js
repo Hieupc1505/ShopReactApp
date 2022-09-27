@@ -4,6 +4,7 @@ const auth = require("../app/middleware/authToken");
 
 route.post("/register", userCtl.register);
 route.get("/activate/:token", userCtl.activate);
+
 route.post("/login", userCtl.login);
 route.get("/logout", userCtl.logout);
 route.get("/verify", auth.authToken, userCtl.verify);

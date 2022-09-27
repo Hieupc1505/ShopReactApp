@@ -1173,6 +1173,9 @@ ul.header-list:last-child {
     position: relative;
     margin: 0 !important;
 }
+.pro-outsd .list-produce-item {
+    min-height: 345px;
+}
 .pro-outsd-slide-control:hover .pro-outsd-icon {
     width: 40px;
     height: 40px;

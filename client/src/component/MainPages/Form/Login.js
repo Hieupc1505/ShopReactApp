@@ -15,7 +15,7 @@ const Login = () => {
     const formRef = React.createRef();
     const history = useHistory();
     const location = useLocation();
-    // console.log(location);
+    console.log(location);
     // const { LoginForm } = useContext(userContext);
     const dispatch = useDispatch();
     const { error, isLoad } = useSelector((state) => state.userAuth);
@@ -51,6 +51,7 @@ const Login = () => {
 
         // setTimeout(() => dispatch(clearError()), 5000);
     };
+
     useEffect(() => {
         Authorization({
             formName: "login",
@@ -72,7 +73,7 @@ const Login = () => {
             ],
         });
     }, []);
-
+    // console.log(location.state);
     return (
         <>
             <div className="app-main">
